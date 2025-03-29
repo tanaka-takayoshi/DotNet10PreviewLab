@@ -25,14 +25,36 @@ namespace DotNet10PreviewLab
 
         private static void IncrementValue(OrderedDictionary<string, int> orderedDictionary, string key)
         {
-            // Try to add a new key with value 1.
             if (!orderedDictionary.TryAdd(key, 1, out int index))
             {
-                // Key was present, so increment the existing value instead.
                 int value = orderedDictionary.GetAt(index).Value;
                 orderedDictionary.SetAt(index, value + 1);
             }
         }
 
+        private static void AddValue(OrderedDictionary<string, string[]> orderedDictionary, string key, string value)
+        {
+            if (!orderedDictionary.TryAdd(key, [value], out int index))
+            {
+                var array = orderedDictionary.GetAt(index).Value;
+                orderedDictionary.SetAt(index, [.. array.Prepend(value)]);
+            }
+        }
+
+        private static void DecrementValue(OrderedDictionary<string, int> orderedDictionary, string key)
+        {
+            if (orderedDictionary.TryGetValue(key, out int value, out int index))
+            {
+                //カウントが0になる場合は削除する
+                if (value == 1)
+                {
+                    orderedDictionary.RemoveAt(index);
+                }
+                else
+                {
+                    orderedDictionary.SetAt(index, value - 1);
+                }
+            }//存在しない場合は何もしない
+        }
     }
 }
