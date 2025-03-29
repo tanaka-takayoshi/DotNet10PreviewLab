@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DotNet10PreviewLab": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
